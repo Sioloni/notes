@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+import "internal/model/PostTimeResponse.proto";
+
+option java_package = "ru.hearmeout.post_time_service";
+option java_multiple_files = true;
+
+
+
+message PostTimeMultipleResponse{
+    repeated PostTimeResponse data = 1;
+
+}

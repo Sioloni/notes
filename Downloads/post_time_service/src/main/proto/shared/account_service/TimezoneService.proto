@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+
+import "google/protobuf/empty.proto";
+import "shared/account_service/model/AccountTimezoneRequest.proto";
+import "shared/account_service/model/AccountTimezoneUpdateRequest.proto";
+import "shared/account_service/model/TimezoneMultipleResponse.proto";
+import "shared/account_service/model/TimezoneRequest.proto";
+import "shared/account_service/model/TimezoneResponse.proto";
+
+option java_package = "ru.hearmeout.timezone_service";
+option java_multiple_files = true;
+
+service TimezoneService {
+  rpc getTimezones (TimezoneRequest) returns (TimezoneMultipleResponse) {}
+  rpc getAccountTimezone (AccountTimezoneRequest) returns (TimezoneResponse) {}
+  rpc updateAccountTimezone (AccountTimezoneUpdateRequest) returns (google.protobuf.Empty) {}
+  rpc createAccountTimezone (AccountTimezoneUpdateRequest) returns (TimezoneResponse) {}
+}

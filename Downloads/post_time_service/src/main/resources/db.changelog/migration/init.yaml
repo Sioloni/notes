@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-post-time
+      author: Gorshkov Nikita
+      changes:
+        - createTable:
+            tableName: post_time
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    unique: true
+                    primaryKey: true
+              - column:
+                  name: key
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: starts_at
+                  type: time
+                  constraints:
+                    nullable: false

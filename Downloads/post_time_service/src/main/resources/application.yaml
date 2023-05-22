@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DATABASE:hearmeout_account_service}
+    username: ${POSTGRES_USER_NAME:postgres}
+    password: ${POSTGRES_PASSWORD:d313d313}
+  main:
+    banner-mode: "off"
+  jpa:
+    open-in-view: 'true'
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: 'true'
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc.lob.non_contextual_creation: 'true'
+        format_sql: 'false'
+    show-sql: 'false'
+    hibernate:
+      ddl-auto: validate
+  liquibase:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DATABASE:hearmeout_account_service}
+    user: ${POSTGRES_USER_NAME:postgres}
+    password: ${POSTGRES_PASSWORD:d313d313}
+    default-schema: ${database_schema:public}
+    enabled: true
+
+#WEB / GRPC Ports
+server:
+  port: ${HTTP_SERVER_PORT:8080}
+
+grpc:
+  server:
+    port: ${GRPC_SERVER_PORT:9090}
+  handler:
+    print-stack-trace: true
+    take-traces: 10
