@@ -3,6 +3,7 @@ package ru.project.notes.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.project.notes.model.dto.RecordGetDto;
 import ru.project.notes.model.dto.SpaceDto;
 import ru.project.notes.model.entity.Record;
 import ru.project.notes.model.entity.Space;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class SpaceMapper {
     private final UserService userService;
     private final RecordRepository recordRepository;
+    private final RecordMapper recordMapper;
 
 
     public SpaceDto toDto(Space entity) {
@@ -26,7 +28,7 @@ public class SpaceMapper {
                         entity.getId(),
                         entity.getTitle(),
                         entity.getUser().getId(),
-                        entity.getRecords().stream().map(Record::getId).collect(Collectors.toList())
+                        entity.getRecords().stream().map(recordMapper::toGetDto).collect(Collectors.toList())
                 );
     }
 
@@ -36,7 +38,7 @@ public class SpaceMapper {
                         dto.getId(),
                         dto.getTitle(),
                         userService.getEntity(dto.getUserId()),
-                        new HashSet<>(recordRepository.findAllById(dto.getRecordId()))
+                        new HashSet<>(recordRepository.findAllById(dto.getRecord().stream().map(RecordGetDto::getId).collect(Collectors.toList())))
                 );
     }
 

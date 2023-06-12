@@ -20,7 +20,7 @@ public class SpaceDto {
 
     private Long userId;
 
-    private List<Long> recordId = new ArrayList<>();
+    private List<RecordGetDto> record = new ArrayList<>();
 }
 
 

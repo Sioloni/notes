@@ -4,6 +4,7 @@ package ru.project.notes.mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.project.notes.model.dto.RecordDto;
+import ru.project.notes.model.dto.RecordGetDto;
 import ru.project.notes.model.entity.Record;
 import ru.project.notes.repository.RecordRepository;
 
@@ -28,6 +29,17 @@ public class RecordMapper {
                         entity.getRecords().stream().map(Record::getId).collect(Collectors.toList())
                 );
     }
+
+    public RecordGetDto toGetDto(Record entity){
+        return new RecordGetDto
+                (
+                        entity.getId(),
+                        entity.getTitle()
+        );
+    }
+
+
+
 
     public Record toEntity(RecordDto dto) {
         return new Record

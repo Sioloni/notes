@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.project.notes.mapper.RecordMapper;
 import ru.project.notes.mapper.SpaceMapper;
 import ru.project.notes.model.dto.RecordDto;
+import ru.project.notes.model.dto.RecordGetDto;
 import ru.project.notes.model.dto.SpaceDto;
 import ru.project.notes.model.entity.Record;
 import ru.project.notes.model.entity.Space;
@@ -16,6 +17,7 @@ import ru.project.notes.service.RecordService;
 import ru.project.notes.service.SpaceService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,13 +32,13 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public List<RecordDto> get(Long spaceId) {
         SpaceDto spaceDto = service.get(spaceId);
-        return mapper.toDto(repository.findAllById(spaceDto.getRecordId()));
+        return mapper.toDto(repository.findAllById(spaceDto.getRecord().stream().map(RecordGetDto::getId).collect(Collectors.toList())));
     }
 
     @Override
     public RecordDto get(Long spaceId, Long id) {
         SpaceDto spaceDto = service.get(spaceId);
-        return mapper.toDto(repository.findAllById(spaceDto.getRecordId())
+        return mapper.toDto(repository.findAllById(spaceDto.getRecord().stream().map(RecordGetDto::getId).collect(Collectors.toList()))
                 .stream()
                 .filter(s -> s.getId().equals(id)).findAny()
                 .orElseThrow(() -> new ApplicationException(ExceptionMessage.ID_NOT_FOUND)));

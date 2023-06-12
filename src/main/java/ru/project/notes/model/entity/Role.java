@@ -15,5 +15,4 @@ public enum Role {
 
     private Set<Permission> permission;
 
-
 }
