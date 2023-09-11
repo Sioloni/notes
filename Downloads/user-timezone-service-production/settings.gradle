@@ -1,0 +1,6 @@
+rootProject.name = 'user_timezone_service'
+
+include 'common-service'
+include 'user-timezone-service-api'
+include 'user-timezone-service-impl'
+
