@@ -1,0 +1,60 @@
+plugins {
+    id "java"
+    id "org.springframework.boot" version "${springBootVersion}"
+    id "io.spring.dependency-management" version "${springDependencyManagementPluginVersion}"
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+ext.set("springCloudVersion", "${springCloudVersion}")
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+
+    // API
+    implementation project(":material-block-article-service-api")
+    implementation project(":common-jtools")
+
+    // SPRING CORE
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // SPRING CLOUD
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    // DATASOURCE
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // FLYWAY
+    implementation 'org.flywaydb:flyway-core'
+
+    // LOMBOK
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    //	JPA MODEL GENERATOR
+    implementation "com.vladmihalcea:hibernate-types-60:${hibernateTypes}"
+    annotationProcessor "org.hibernate:hibernate-jpamodelgen:${hibernateJpaModelGenVersion}"
+    compileOnly "org.hibernate.orm:hibernate-jpamodelgen:${hibernateJpaModelGenVersion}"
+
+    // PERSISTENCE API
+    implementation "jakarta.persistence:jakarta.persistence-api:${jakartaPersistenceApiVersion}"
+
+    //JAVAX
+    implementation "javax.annotation:javax.annotation-api:${javaxAnnotationApiVersion}"
+}
