@@ -8,7 +8,6 @@ public record CreateBlockArticleStructureRequest
         (
                 UUID materialBlockId,
                 UUID materialBlockArticleTypeId,
-                ESourceType sourceType,
-                Long position
+                ESourceType sourceType
         ) {
 }

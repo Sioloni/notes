@@ -1,7 +1,9 @@
 package ru.neotoria.gempl.microservices.domain.persistence.spec;
 
+import jakarta.persistence.criteria.Join;
 import lombok.experimental.UtilityClass;
 import org.springframework.data.jpa.domain.Specification;
+import ru.neotoria.gempl.microservices.domain.persistence.entity.MaterialBlockArticle;
 import ru.neotoria.gempl.microservices.domain.persistence.entity.MaterialBlockArticleStructure;
 import ru.neotoria.gempl.microservices.domain.persistence.entity.MaterialBlockArticleStructure_;
 import ru.neotoria.gempl.microservices.payload.constant.ESourceType;
@@ -15,15 +17,16 @@ import java.util.UUID;
 public class MaterialBlockArticleStructureSpec {
 
 
-//    public Specification<MaterialBlockArticleStructure> materialBlockIdIn(Collection<UUID> ids) {
-//        if (ids == null || ids.isEmpty()) {
-//            return Spec.conjunction();
-//        }
-//        return Spec.fieldIn(
-//                Materia,
-//                ids
-//        );
-//    }
+    public Specification<MaterialBlockArticleStructure> materialBlockIdIn(Collection<UUID> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return Spec.conjunction();
+        }
+        return (root, query, criteriaBuilder) -> {
+            Join<MaterialBlockArticleStructure, MaterialBlockArticle> materialBlockJoin = root.join("materialBlockId");
+
+            return materialBlockJoin.get("materialBlockId").in(ids);
+        };
+    }
 
     public Specification<MaterialBlockArticleStructure> materialBlockArticleIdIn(Collection<UUID> ids) {
         if (ids == null || ids.isEmpty()) {

@@ -16,6 +16,7 @@ import ru.neotoria.gempl.microservices.payload.filter.BlockArticleStructureFilte
 import ru.neotoria.gempl.microservices.payload.request.*;
 import ru.neotoria.gempl.microservices.payload.response.*;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 @RestController
@@ -173,8 +174,7 @@ public class MaterialBlockArticleController implements MaterialBlockArticleApi {
                 (
                         request.materialBlockId(),
                         request.materialBlockArticleTypeId(),
-                        request.sourceType(),
-                        request.position()
+                        request.sourceType()
                 );
     }
 
