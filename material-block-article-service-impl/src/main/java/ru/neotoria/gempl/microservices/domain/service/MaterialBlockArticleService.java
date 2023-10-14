@@ -6,7 +6,7 @@ import ru.neotoria.gempl.microservices.domain.persistence.entity.MaterialBlockAr
 import ru.neotoria.gempl.microservices.domain.persistence.repository.MaterialBlockArticleRepository;
 import ru.neotoria.gempl.microservices.domain.persistence.repository.MaterialBlockArticleStructureRepository;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,14 +29,13 @@ public class MaterialBlockArticleService {
 
     public void create
             (
-                    UUID materialBlockId,
-                    Collection<UUID> structureIds
+                    UUID materialBlockId
             ) {
 
         blockArticleRepository.save(
                 new MaterialBlockArticle(
                         materialBlockId,
-                        blockArticleStructureRepository.getEntityByIds(structureIds)
+                        new ArrayList<>()
                 )
         );
     }

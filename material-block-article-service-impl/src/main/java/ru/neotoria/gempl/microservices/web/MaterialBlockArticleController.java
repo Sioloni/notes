@@ -49,8 +49,7 @@ public class MaterialBlockArticleController implements MaterialBlockArticleApi {
     @Override
     public void createBlockArticle(CreateBlockArticleRequest request) {
         blockArticleService.create(
-                request.materialBlockId(),
-                request.structureIds()
+                request.materialBlockId()
         );
     }
 

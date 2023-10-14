@@ -19,7 +19,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class MaterialBlockArticleStructureService {
     private final MaterialBlockArticleStructureRepository repository;
-    protected final MaterialBlockArticleRepository materialBlockArticleRepository;
+    private final MaterialBlockArticleRepository materialBlockArticleRepository;
 
 
     public List<MaterialBlockArticleStructure> getAll() {
@@ -30,7 +30,7 @@ public class MaterialBlockArticleStructureService {
         return repository.getEntityById(id);
     }
 
-    public void create
+    public MaterialBlockArticleStructure create
             (
                     UUID materialBlockId,
                     UUID materialBlockArticleTypeId,
@@ -58,9 +58,8 @@ public class MaterialBlockArticleStructureService {
         }
 
         MaterialBlockArticle materialBlockArticle = materialBlockArticleRepository.getEntityById(materialBlockId);
-        System.out.println(materialBlockArticle.toString());
 
-        repository.save(new MaterialBlockArticleStructure
+        MaterialBlockArticleStructure materialBlockArticleStructure = repository.save(new MaterialBlockArticleStructure
                 (
                         UUID.randomUUID(),
                         materialBlockArticle,
@@ -69,7 +68,9 @@ public class MaterialBlockArticleStructureService {
                         position
                 )
         );
-
+        materialBlockArticle.getStructures().add(materialBlockArticleStructure);
+        materialBlockArticleRepository.save(materialBlockArticle);
+        return materialBlockArticleStructure;
     }
 
     public void update

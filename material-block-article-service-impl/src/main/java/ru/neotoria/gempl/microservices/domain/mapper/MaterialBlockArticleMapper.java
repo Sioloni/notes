@@ -13,6 +13,7 @@ import java.util.Collection;
 public class MaterialBlockArticleMapper {
 
 
+
     public BlockArticleResponse toBlockArticleResponse(
             MaterialBlockArticle materialBlockArticle
     ) {

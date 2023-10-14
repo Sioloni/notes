@@ -81,5 +81,4 @@ public interface MaterialBlockArticleApi {
 
     @PostMapping(MaterialBlockArticleRouter.STRUCTURE_FILTER)
     BlockArticleStructureMultipleResponse filterBlockArticleStructure(@RequestBody BlockArticleStructureFilter filter);
-
 }
