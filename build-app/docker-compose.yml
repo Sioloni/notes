@@ -1,0 +1,21 @@
+version: "3.3"
+
+services:
+  service:
+    environment:
+      - NAME
+      - MAVEN_PUBLISH_USERNAME
+      - MAVEN_PUBLISH_PASSWORD
+    build:
+      context: ..
+      dockerfile: build.Dockerfile
+      args:
+        WORK_DIR: ${NAME}-api
+    image: neotoria_build_${NAME}:latest
+    command: >-
+      gradle build
+      publish
+      -PmavenPublishUsername=${MAVEN_PUBLISH_USERNAME}
+      -PmavenPublishPassword=${MAVEN_PUBLISH_PASSWORD}
+    container_name: build_${NAME}
+

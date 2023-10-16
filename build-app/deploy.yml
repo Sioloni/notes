@@ -1,0 +1,55 @@
+---
+- hosts: build_neotoria_server
+  become: yes
+  become_user: root
+  vars:
+    - name: "{{ git_name }}"
+    - version: "{{ branch }}"
+    - git_path: "{{ git_path }}"
+    - app_path: "/workspace/{{ git_path }}"
+    - maven_publish_username: "{{ maven_publish_username }}"
+    - maven_publish_password: "{{ maven_publish_password }}"
+  tasks:
+    - name: "create path {{ name }}"
+      file:
+        path: "{{ app_path }}"
+        state: directory
+        owner: root
+        group: root
+        mode: 0775
+
+    - name: "Clone a GitLab repository {{ name }}"
+      environment:
+        GIT_SSH_COMMAND: 'ssh -o StrictHostKeyChecking=no'
+      git:
+        repo: "git@gitlab.neotoria.ru:{{ git_path }}.git"
+        dest: "{{ app_path }}"
+        force: yes
+        clone: yes
+        version: "{{ version }}"
+        update: yes
+
+    - name: "Build backend {{ name }}"
+      shell: "
+      NAME={{ name }}
+      MAVEN_PUBLISH_USERNAME={{ maven_publish_username }} 
+      MAVEN_PUBLISH_PASSWORD={{ maven_publish_password }} 
+      docker-compose -f build-app/docker-compose.yml up --build --force-recreate"
+      register: build_result
+      args:
+        chdir: "{{ app_path }}"
+
+    - name: "Build logs"
+      shell: docker-compose -f build-app/docker-compose.yml logs
+      args:
+        chdir: "{{ app_path }}"
+      register: build_log
+
+    - name: "Show build logs"
+      debug:
+        msg: "{{ build_log.stdout_lines }}"
+
+    - name: "Handle failure"
+      fail:
+        msg: "Build FAILED"
+      when: build_result.stdout is not search("BUILD SUCCESSFUL")
