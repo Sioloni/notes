@@ -1,28 +1,57 @@
 plugins {
     id "java"
-    id "org.springframework.boot" version "${springBootVersion}"
-    id "io.spring.dependency-management" version "${springDependencyManagementPluginVersion}"
+    id 'maven-publish'
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
 }
-
-repositories {
-    mavenCentral()
-}
-
-ext.set("springCloudVersion", "${springCloudVersion}")
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "${springCloudDependencies}:${springCloudDependenciesVersion}"
     }
 }
 
 dependencies {
-    // API
-    implementation project(":common-jtools")
+
+    // NEOTORIA COMMON
+    implementation libs.neotoria.common.jtools
 
     // SPRING CLOUD
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation libs.spring.cloud.starter.netflix.eureka.client
+    implementation libs.spring.cloud.starter.openfeign
 }
 
 bootJar.enabled = false
+
+jar{
+    archiveClassifier = projectArchiveClassifier
+    archiveVersion = projectVersion
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            setGroup(projectGroup)
+            setVersion(projectVersion)
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            url = mavenPublishUrl
+            credentials {
+                username = project.findProperty("mavenPublishUsername")
+                password = project.findProperty("mavenPublishPassword")
+            }
+        }
+    }
+}

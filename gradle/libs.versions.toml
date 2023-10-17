@@ -1,0 +1,68 @@
+# -------------------------- Versions ----------------------------
+
+[versions]
+
+# NEOTORIA
+neotoria-common-jtools-version = "1.0"
+neotoria-email-notification-service-version = "1.0"
+neotoria-account-service-version = "1.0"
+neotoria-localization-service-version = "1.0"
+neotoria-setting-service-version = "1.0"
+
+# SPRING
+spring-boot-version = "3.1.0"
+spring-cloud-version = "2022.0.4"
+spring-dependency-management-version = "1.1.0"
+
+#HIBERNATE JPA MODEL GENERATOR
+hibernate-jpa-model-gen-version = "6.2.0.Final"
+
+#JAVAX ANNOTATION API
+javax-annotation-api-version = "1.3.2"
+
+# -------------------------- Libraries ---------------------------
+
+[libraries]
+
+# NEOTORIA
+neotoria-common-jtools = { module = "ru.neotoria.microservices.common:common-jtools", version.ref = "neotoria-common-jtools-version" }
+neotoria-email-notification-service = { module = "ru.neotoria.microservices:email-notification-service-api", version.ref = "neotoria-email-notification-service-version" }
+neotoria-account-service = { module = "ru.neotoria.microservices:account-service-api", version.ref = "neotoria-account-service-version" }
+neotoria-localization-service = { module = "ru.neotoria.microservices:localization-service-api", version.ref = "neotoria-localization-service-version" }
+neotoria-setting-service = { module = "ru.neotoria.microservices:setting-service-api", version.ref = "neotoria-setting-service-version" }
+
+# SPRING BOOT
+spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring-boot-version" }
+spring-boot-starter-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux", version.ref = "spring-boot-version" }
+spring-boot-configuration-processor = { module = "org.springframework.boot:spring-boot-configuration-processor", version.ref = "spring-boot-version" }
+spring-boot-starter-mail = {module = "org.springframework.boot:spring-boot-starter-mail", version.ref = "spring-boot-version"}
+
+# SPRING CLOUD
+spring-cloud-dependencies = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "spring-cloud-version" }
+spring-cloud-starter-netflix-eureka-client = { module = "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client" }
+spring-cloud-starter-openfeign = { module = "org.springframework.cloud:spring-cloud-starter-openfeign" }
+
+# SPRING KAFKA
+spring-kafka = {module = "org.springframework.kafka:spring-kafka"}
+
+# DATASOURCE
+postgresql = { module = "org.postgresql:postgresql" }
+
+# FLYWAY
+flyway = { module = "org.flywaydb:flyway-core" }
+
+# LOMBOK
+lombok = { module = "org.projectlombok:lombok" }
+
+#HIBERNATE JPA MODEL GENERATOR
+hibernate-jpa-model-gen-annotation-processor = { module = "org.hibernate:hibernate-jpamodelgen", version.ref = "hibernate-jpa-model-gen-version" }
+hibernate-jpa-model-gen-compile-only = { module = "org.hibernate.orm:hibernate-jpamodelgen", version.ref = "hibernate-jpa-model-gen-version" }
+
+#JAVAX ANNOTATION API
+javax-annotation-api = { module = "javax.annotation:javax.annotation-api", version.ref = "javax-annotation-api-version" }
+
+[plugins]
+
+# SPRING
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot-version" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management-version" }
